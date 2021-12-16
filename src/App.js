@@ -1,6 +1,7 @@
 import './App.css';
 
-import { MdGrade } from "react-icons/md";
+import { MovieList } from './MovieList';
+import {useState} from "react";
 
 export default function App() {
   const details=[
@@ -12,32 +13,34 @@ export default function App() {
     {name:"Up",image:"https://m.media-amazon.com/images/M/MV5BMTk3NDE2NzI4NF5BMl5BanBnXkFtZTgwNzE1MzEyMTE@._V1_.jpg",rating:8.2,summary:"Carl Fredricksen, a 78-year-old balloon salesman, is about to fulfill a lifelong dream. Tying thousands of balloons to his house, he flies away to the South American wilderness. But curmudgeonly Carl's worst nightmare comes true when he discovers a little boy named Russell is a stowaway aboard the balloon-powered house."}
   ];
   
-
+const [movies,setMovies]=useState(details);
   return (
     <div className="App">
-    <div className="outer-box">
-{details.map(nm=><Welcome name={nm.name} image={nm.image} rating={nm.rating} summary={nm.summary}/>)}
-
-</div>
+    <AddMovie movies={movies} setMovies={setMovies} />
+    <MovieList details={details} />
     </div>
   );
 }
 
-function Welcome({name,image,rating,summary}) {
-  const colour=rating>=8?{color:"green"}:{color:"blue"};
-  return (
-  
-    <div className="box">
-    
-      <img src={image} alt={name} />
-      <div className="details">
-      <h1>{name}</h1>
-      <p className="rating" style={colour}><MdGrade className="star"/>  {rating}</p>
-      </div>
-      <p className="summary">{summary}</p>
-      
-      
-    </div>
-    
+function AddMovie({movies,setMovies})
+{
+  const [name,setName]=useState("");
+  const [rating,setRating]=useState("");
+  const [poster,setPoster]=useState("");
+  const [summary,setSummary]=useState("");
+  const addmovie=()=>{
+    const newMovie={name,rating,poster,summary};
+    console.log(newMovie);
+    setMovies([...movies,newMovie]);
+  };
+ 
+  return(
+<div className="Add_movie_box">
+ <p>Movie Name </p> <input type="text" onChange={(event)=>setName(event.target.value)}></input>
+ <p>Poster url</p> <input type="text" onChange={(event)=>setPoster(event.target.value)}></input>
+ <p>Rating </p> <input type="text" onChange={(event)=>setRating(event.target.value)}></input>
+ <p>Summary</p> <input type="text" onChange={(event)=>setSummary(event.target.value)}></input>
+ <button className="add_movie_button" onClick={addmovie}>Add Movie</button>
+</div>
   );
 }

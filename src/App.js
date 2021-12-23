@@ -1,6 +1,10 @@
 import './App.css';
 
+import { Link, Route, Switch } from "react-router-dom";
+
+import Button from '@mui/material/Button';
 import { MovieList } from './MovieList';
+import TextField from '@mui/material/TextField';
 import {useState} from "react";
 
 export default function App() {
@@ -14,33 +18,81 @@ export default function App() {
   ];
   
 const [movies,setMovies]=useState(details);
+const [name,setName]= useState("");
+  const [rating,setRating]= useState("");
+  const [image,setImage]= useState("");
+  const [summary,setSummary]= useState("");
   return (
     <div className="App">
-    <AddMovie movies={movies} setMovies={setMovies} />
-    <MovieList details={details} />
+   <div className="navigation">
+   <Link className="link" to="/">Home</Link>
+   <Link className="link" to="/movies">Movies</Link>
+   <Link  className="link" to="/color-game">Color Game</Link>
+   <Link className="link" to="/add-movie">Add Movie</Link>
+   </div>
+   
+   <Switch>
+   <Route path="/movies">
+  
+
+
+    <MovieList movies={movies} setMovies={setMovies} />
+    </Route>
+    <Route path="/color-game">
+    <Addcolor />
+    </Route>
+    <Route path="/add-movie">
+    <div className="Add_movie_box">
+<TextField id="filled-basic" margin="normal" fullWidth  label="Name" variant="filled" value={name} onChange={(event)=>setName(event.target.value)}/>
+ <TextField id="filled-basic" margin="normal"  fullWidth label="Image" variant="filled" value={image} onChange={(event)=>setImage(event.target.value)}/>
+ <TextField id="filled-basic"  margin="normal"  fullWidth label="Rating" variant="filled" value={rating} onChange={(event)=>setRating(event.target.value)}/>
+ <TextField id="filled-basic" margin="normal"  fullWidth label="Summary" variant="filled" value={summary} onChange={(event)=>setSummary(event.target.value)}/>
+ <Button variant="contained" color="success" size="large"  fullWidth onClick={()=>{
+   const newMovie={name,rating,image,summary};
+    console.log(newMovie);
+    setMovies([...movies,newMovie]);
+ }}>Add Movie</Button>
+</div>
+    </Route>
+    <Route path="/">
+     <Home />
+    </Route>
+    </Switch>
     </div>
+    
   );
 }
 
-function AddMovie({movies,setMovies})
-{
-  const [name,setName]=useState("");
-  const [rating,setRating]=useState("");
-  const [poster,setPoster]=useState("");
-  const [summary,setSummary]=useState("");
-  const addmovie=()=>{
-    const newMovie={name,rating,poster,summary};
-    console.log(newMovie);
-    setMovies([...movies,newMovie]);
-  };
- 
+function Addcolor(){
+  const [color,setColor]=useState("pink");
+  const styles={background:color};
+  const [colorlist,setColorlist]=useState(["teal","orange","green"]);
   return(
-<div className="Add_movie_box">
- <p>Movie Name </p> <input type="text" onChange={(event)=>setName(event.target.value)}></input>
- <p>Poster url</p> <input type="text" onChange={(event)=>setPoster(event.target.value)}></input>
- <p>Rating </p> <input type="text" onChange={(event)=>setRating(event.target.value)}></input>
- <p>Summary</p> <input type="text" onChange={(event)=>setSummary(event.target.value)}></input>
- <button className="add_movie_button" onClick={addmovie}>Add Movie</button>
+<div>
+  <input value={color} style={styles} onChange={(event)=>setColor(event.target.value)} placeholder="enter a color"/>
+  <button onClick={()=>setColorlist([...colorlist,color])}> Add Color</button>
+  {colorlist.map((clr)=>(<ColorBox clr={clr} />))};
 </div>
+
   );
+}
+function ColorBox({clr})
+{
+  const styles={
+    height:"25px",
+    width:"250px",
+    background:clr,
+    marginTop:"10px"
+
+  };
+  return(
+<div style={styles}></div>
+  )
+}
+function Home(){
+  return(
+    
+      <div className="home"><img src="https://www.neonsignsuk.com/images/big/Welcome-Friends-Neon-Sign.jpg"></img></div>
+    
+  )
 }

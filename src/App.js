@@ -92,7 +92,7 @@ function ColorBox({clr})
 function Home(){
   return(
     
-      <div className="home"><img src="https://www.neonsignsuk.com/images/big/Welcome-Friends-Neon-Sign.jpg"></img></div>
+      <div className="home"><img src="https://www.neonsignsuk.com/images/big/Welcome-Friends-Neon-Sign.jpg" alt="welcome"></img></div>
     
   )
 }

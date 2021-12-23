@@ -40,7 +40,7 @@ object-fit: cover;
 }
 .counter{
   display:flex;
-  border:1px solid black;
+ 
   
 }
 button{
@@ -72,20 +72,20 @@ input{
 
 .movie_actions{
   display:flex;
-  border:1px solid red;
+  
   align-items:center;
 }
 .first_box{
   display:flex;
   align-items:center;
   justify-content: space-between;
-  border:1px solid black;
+  
 }
 .navigation{
   display:flex;
   gap:20px;
   align-items:center;
-  border:1px solid black;
+  
   margin:15px;
   font-size:20px;
 }
